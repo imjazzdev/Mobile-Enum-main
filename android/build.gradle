@@ -1,0 +1,34 @@
+buildscript {
+    ext.kotlin_version = "1.8.0"
+    repositories {
+        google() // Repositori untuk plugin Android
+        mavenCentral() // Repositori untuk dependensi Kotlin
+    }
+    dependencies {
+        // classpath "com.android.tools.build:gradle:7.6.0" // Plugin Gradle Android
+        // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0" // Plugin Kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
